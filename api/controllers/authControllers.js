@@ -39,6 +39,8 @@ const authControllers = {
                 res.status(401).json('Wrong password!')
 
             const { password, ...info } = user._doc;
+
+            //create token
             const accessToken = jwt.sign(
                 {
                     id: user.id,

@@ -2,6 +2,16 @@ const User = require("../models/User");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
+const createAccessToken = (user) => {
+    return jwt.sign({
+        id: user.id,
+        isAdmin: user.isAdmin,
+    },
+        process.env.JWT_ACCESS_KEY,
+        { expiresIn: "2h" }
+    )
+}
+
 const authControllers = {
     // REGISTER
     registerUser: async (req, res) => {
@@ -18,7 +28,7 @@ const authControllers = {
             const user = await newUser.save();
             res.status(200).json(user)
         } catch (err) {
-            res.status(500).json(err)
+            return res.status(500).json(err)
         }
     },
 
@@ -26,7 +36,7 @@ const authControllers = {
     login: async (req, res) => {
         try {
             const user = await User.findOne({ email: req.body.email });
-            !user && res.status(401).json('Email is not exist!')
+            if (!user) { return res.status(401).json('Email is not exist!') }
 
             //decrypt
             const bytes = CryptoJS.AES.decrypt(
@@ -35,20 +45,15 @@ const authControllers = {
             );
 
             const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-            originalPassword !== req.body.password &&
-                res.status(401).json('Wrong password!')
+            if (originalPassword !== req.body.password) {
+                return res.status(401).json('Wrong password!')
+            }
 
             const { password, ...info } = user._doc;
 
             //create token
-            const accessToken = jwt.sign(
-                {
-                    id: user.id,
-                    isAdmin: user.isAdmin,
-                },
-                process.env.JWT_ACCESS_KEY,
-                { expiresIn: "2h" }
-            )
+            const accessToken = createAccessToken(user)
+
             res.status(200).json({ ...info, accessToken })
 
         } catch (err) {

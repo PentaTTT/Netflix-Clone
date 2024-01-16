@@ -1,7 +1,6 @@
 const userControllers = require('../controllers/userControllers');
 const middlewareController = require('../controllers/middlewareControllers')
 const router = require('express').Router();
-const CryptoJS = require('crypto-js')
 
 // GET ALL USERS
 router.get("/", middlewareController.verifyToken, userControllers.getAllUsers);

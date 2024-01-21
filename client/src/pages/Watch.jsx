@@ -1,10 +1,13 @@
 import React from 'react'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-const Watch = (props) => {
-    const data = props
-    const navigate = useNavigate()
+const Watch = () => {
+    const navigate = useNavigate();
+
+    const location = useLocation();
+    const movie = location.state;
+
     return (
         <div className='h-screen w-screen bg-black'>
             <nav
@@ -23,14 +26,14 @@ const Watch = (props) => {
             >
                 <AiOutlineArrowLeft onClick={() => navigate('/')} className='text-white cursor-pointer' size={40} />
                 <p className='text-white text-1xl md:text-3xl font-bold'>
-                    <span className='font-light'> Watching: </span> {data?.title}
+                    <span className='font-light'> Watching: </span> {movie.title}
                 </p>
             </nav>
             <video
                 autoPlay
                 controls
                 className='h-full w-full'
-                src={'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'}
+                src={movie.trailer}
             ></video>
         </div>
     )

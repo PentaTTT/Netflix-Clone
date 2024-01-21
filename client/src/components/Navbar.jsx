@@ -61,12 +61,14 @@ const Navbar = () => {
                         gap-7
                     '
                 >
-                    <NavbarItem label={'Home'} />
-                    <NavbarItem label={'Series'} />
-                    <NavbarItem label={'Films'} />
-                    <NavbarItem label={'New & Popular'} />
-                    <NavbarItem label={'My List'} />
-                    <NavbarItem label={'Browse by'} />
+
+                    <NavbarItem label={'Home'} link={'/'} />
+                    <NavbarItem label={'Series'} link={'/series'} />
+                    <NavbarItem label={'Movies'} link={'/movies'} />
+
+                    <NavbarItem label={'New & Popular'} link={'/new'} />
+                    <NavbarItem label={'My List'} link={'/my-list'} />
+                    <NavbarItem label={'Browse by'} link={'/browse'} />
                 </div>
 
                 {/* --menu-- */}

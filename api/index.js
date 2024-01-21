@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const cookieParser = require("cookie-parser")
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users");
 const movieRoute = require("./routes/movies");
@@ -11,6 +12,7 @@ const listRoute = require("./routes/list");
 dotenv.config();
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser())
 
 mongoose.set('useFindAndModify', false);
 mongoose.connect(process.env.MONGO_URL, {

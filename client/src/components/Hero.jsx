@@ -13,7 +13,7 @@ const Hero = (props) => {
                                 text-sm lg:text-xl 
                                 flex items-center gap-2'
                 >
-                    <span className='text-white'>{type === "movie" ? "Movies" : "Series"}</span>
+                    <span className='text-white'>{type === "movies" ? "Movies" : "Series"}</span>
                     <select className='
                                 cursor-pointer
                                 bg-zinc-900 text-white 
@@ -25,6 +25,7 @@ const Hero = (props) => {
                         <option value='adventure'>Adventure</option>
                         <option value='comedy'>Comedy</option>
                         <option value='crime'>Crime</option>
+                        <option value='fantasy'>Fantasy</option>
                     </select>
                 </div>
             )
@@ -39,8 +40,8 @@ const Hero = (props) => {
                 autoPlay
                 muted
                 loop
-                poster={movie?.thumbnailUrl}
-                src={movie?.videoUrl}>
+                poster={movie?.img}
+                src={movie?.trailer}>
             </video>
 
             <div className='absolute top-[30%] lg:top-[40%] ml-4 md:ml-16'>
@@ -68,7 +69,7 @@ const Hero = (props) => {
                     lg:w-[45%]
                     drop-shadow-xl
                 '>
-                    {movie?.description}
+                    {movie?.desc}
                 </p>
 
                 <div className='flex flex-row items-center mt-3 md:mt-4 gap-3'>

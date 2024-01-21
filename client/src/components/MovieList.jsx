@@ -4,11 +4,13 @@ import MovieCard from './MovieCard'
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const MovieList = (props) => {
-    const { title, movieData, listRef } = props
+    const { title, movieData } = props
 
     const [zIndex, setZIndex] = useState(false)
     const [sliderPosition, setSliderPosition] = useState(0)
     const [showControls, setShowControls] = useState(false)
+
+    const listRef = useRef()
 
     const handleMove = (direction) => {
         if (direction === 'right') {
@@ -59,11 +61,12 @@ const MovieList = (props) => {
                     onMouseEnter={() => setZIndex(true)}
                     onMouseLeave={() => setZIndex(false)}
                 >
-                    {movieData.map((movie) => {
-                        return (
-                            <MovieCard data={movie} />
-                        )
-                    })}
+                    {movieData && movieData.length > 0 &&
+                        movieData.map((movie, index) => {
+                            return (
+                                <MovieCard key={index} data={movie} />
+                            )
+                        })}
                 </div>
 
                 <IoIosArrowForward

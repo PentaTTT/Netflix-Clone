@@ -5,13 +5,12 @@ import logo from '../public/images/logo.png'
 import Input from '../components/Input'
 import { useNavigate } from 'react-router-dom'
 
-const Login = () => {
+const Login = ({ isRegister }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
-    const [isLogin, setIsLogin] = useState(true)
 
-    const navigate = useNavigate()
+    const nav = useNavigate();
 
     return (
         <div className={`
@@ -32,11 +31,11 @@ const Login = () => {
                         lg:w-2/5 lg:max-w-md rounded-md w-4/5
                     '>
                         <h2 className='text-white text-4xl mb-8'>
-                            {isLogin ? 'Sign In' : 'Register'}
+                            {isRegister ? 'Register' : 'Sign In'}
                         </h2>
 
                         <div className='flex flex-col gap-4'>
-                            {!isLogin &&
+                            {isRegister &&
                                 <Input
                                     id={"name"}
                                     type={"text"}
@@ -68,20 +67,20 @@ const Login = () => {
                              rounded-md w-full hover:bg-red-700
                              transition
                             '
-                            onClick={() => { navigate('/') }}
+                            onClick={() => handleLogin()}
                         >
-                            {isLogin ? "Login" : "Sign Up"}
+                            {isRegister ? "Sign Up" : "Login"}
                         </button>
 
                         <p className='text-neutral-500 mt-12'>
-                            {isLogin ? "New to Netflix?" : "Have an account?"}
+                            {isRegister ? "Have an account?" : "New to Netflix?"}
                             <span className='
                                 text-white ml-1 
                                 hover:underline
                                 cursor-pointer'
-                                onClick={() => setIsLogin(!isLogin)}
+                                onClick={() => isRegister ? nav('/login') : nav('/register')}
                             >
-                                {isLogin ? "Sign up now." : "Sign in now."}
+                                {isRegister ? "Sign in now." : "Sign up now."}
                             </span>
                         </p>
                     </div>

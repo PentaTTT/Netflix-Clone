@@ -1,10 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { SlLike } from "react-icons/sl";
 import { FaChevronDown, FaPlus } from "react-icons/fa6";
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const MovieCard = (props) => {
-    const { data } = props
+    const { data } = props;
+    const [movie, setMovie] = useState({});
+    const [isPlay, setIsPlay] = useState(false)
+
+    useEffect(() => {
+        const getMovie = async () => {
+            try {
+                const res = await axios.get(`http://localhost:8080/api/movie/find/` + data,
+                    {
+                        headers: {
+                            token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YTAxOGIyOTE5YmU1MTY4OGMyZmJmMyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwNTc1MjcxMiwiZXhwIjoxNzA2MzU3NTEyfQ.Rqwgy2h_IVSaMNsqTi5dlt3VhUDHBQaPDC9H-uqfyd0"
+                        }
+                    }
+                )
+                if (res && res.status === 200) {
+                    setMovie(res.data)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getMovie()
+    }, [data]);
 
     return (
         <div className='
@@ -12,6 +36,9 @@ const MovieCard = (props) => {
                         min-w-[50%] md:min-w-[33.3333%] lg:min-w-[25%]
                         h-[24vw] md:h-[16vw] lg:h-[12vw]
                         px-1 bg-zinc-900 aspect-video'
+
+            onMouseEnter={() => setIsPlay(true)}
+            onMouseLeave={() => setIsPlay(false)}
         >
             <img
                 className='
@@ -22,12 +49,12 @@ const MovieCard = (props) => {
                     shadow-xl
                     group-hover:opacity-90
                     sm:group-hover:opacity-0
-                    delay-300
+                    delay-200
                     w-full
                     h-full
                     md:h-[16vw] lg:h-[12vw]
                 '
-                src={data.thumbnailUrl} alt={data.title}
+                src={movie.img} alt={movie.title}
             />
 
             {/* --hover-- */}
@@ -41,7 +68,7 @@ const MovieCard = (props) => {
                     duration-200
                     z-40
                     delay-[250ms]
-                    ease-out
+                    ease-in-out
                     w-full
                     scale-0
                     group-hover:scale-100
@@ -50,24 +77,42 @@ const MovieCard = (props) => {
                     group-hover:opacity-100
                 '
             >
-                <video
-                    className='
-                        cursor-pointer
-                        object-cover
-                        transition
-                        shadow-xl
-                        rounded-t-md
-                        w-full
-                        h-[22vw]
-                        md:h-[12vw]
-                    '
-                    autoPlay
-                    muted
-                    loop
-                    poster={data?.thumbnailUrl}
-                    src={data?.videoUrl} alt={data?.title}
-                />
-
+                {isPlay ?
+                    <Link to="/watch" state={movie}>
+                        <video
+                            className='
+                            cursor-pointer
+                            object-cover
+                            transition
+                            shadow-xl
+                            rounded-t-md
+                            w-full
+                            h-[22vw]
+                            md:h-[12vw]
+                        '
+                            autoPlay
+                            muted
+                            loop
+                            poster={movie?.img}
+                            src={movie?.trailer} alt={movie?.title}
+                        />
+                    </Link>
+                    :
+                    <Link to="/watch" state={movie}>
+                        <img
+                            className='
+                            cursor-pointer
+                            object-cover
+                            transition
+                            shadow-xl
+                            w-full
+                            h-full
+                            md:h-[16vw] lg:h-[12vw]
+                        '
+                            src={movie.img} alt={movie.title}
+                        />
+                    </Link>
+                }
                 {/* --info movie-- */}
                 <div
                     className='
@@ -164,17 +209,17 @@ const MovieCard = (props) => {
 
                     {/* --text-- */}
                     <p className='text-green-400 lg:text-xl text-[10px] font-semibold mt-4'>
-                        New <span className='text-white'>2023</span>
+                        New <span className='text-white'>{movie.year}</span>
                     </p>
 
                     <div className='flex flex-row mt-4 gap-2 items-center'>
                         <p className='text-white text-[10px] lg:text-[14px]'>
-                            {data.duration}
+                            {movie.limit}
                         </p>
                     </div>
                     <div className='flex flex-row mt-4 gap-2 items-center'>
                         <p className='text-white text-[10px] lg:text-[14px]'>
-                            {data.genre}
+                            {movie.genre}
                         </p>
                     </div>
 

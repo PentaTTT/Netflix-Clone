@@ -1,13 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const NavbarItem = (props) => {
-    const { label } = props
+    const { label, link } = props
     return (
-        <div className='
+        <NavLink to={link}
+            className={({ isActive }) => (isActive ? 'font-bold' : '')}
+        >
+            <div className='
             text-white cursor-pointer transition hover:text-gray-300
-        '>
-            {label}
-        </div>
+            '>
+                {label}
+            </div>
+        </NavLink>
     )
 }
 

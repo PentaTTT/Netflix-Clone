@@ -21,7 +21,7 @@ const PlayButton = (props) => {
                 hover:bg-neutral-300
                 transition
             '
-            onClick={() => navigate('/watch')}
+            onClick={() => navigate('/watch', { state: movieData })}
         >
             <BsFillPlayFill size={25} className='mr-1' />
             Play

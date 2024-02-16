@@ -4,9 +4,12 @@ import { SlLike } from "react-icons/sl";
 import { FaChevronDown, FaPlus } from "react-icons/fa6";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const MovieCard = (props) => {
     const { data } = props;
+    const accessToken = useSelector(state => state.auth.login.currentUser.accessToken)
+
     const [movie, setMovie] = useState({});
     const [isPlay, setIsPlay] = useState(false)
 
@@ -16,7 +19,7 @@ const MovieCard = (props) => {
                 const res = await axios.get(`http://localhost:8080/api/movie/find/` + data,
                     {
                         headers: {
-                            token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YTAxOGIyOTE5YmU1MTY4OGMyZmJmMyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwNTc1MjcxMiwiZXhwIjoxNzA2MzU3NTEyfQ.Rqwgy2h_IVSaMNsqTi5dlt3VhUDHBQaPDC9H-uqfyd0"
+                            token: "Bearer " + accessToken
                         }
                     }
                 )

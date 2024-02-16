@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const MobileMenu = (props) => {
     const { visible } = props
@@ -21,24 +22,24 @@ const MobileMenu = (props) => {
                 border-gray-500
         '>
             <div className='flex flex-col gap-4'>
-                <div className='text-center text-white hover:underline'>
+                <Link to='/' className='text-center text-white hover:underline'>
                     Home
-                </div>
-                <div className='text-center text-white hover:underline'>
+                </Link>
+                <Link to='/series' className='text-center text-white hover:underline'>
                     Series
-                </div>
-                <div className='text-center text-white hover:underline'>
+                </Link>
+                <Link to='/movies' className='text-center text-white hover:underline'>
                     Films
-                </div>
-                <div className='text-center text-white hover:underline'>
+                </Link>
+                <Link className='text-center text-white hover:underline'>
                     New & Popular
-                </div>
-                <div className='text-center text-white hover:underline'>
+                </Link>
+                <Link className='text-center text-white hover:underline'>
                     My List
-                </div>
-                <div className='text-center text-white hover:underline'>
+                </Link>
+                <Link className='text-center text-white hover:underline'>
                     Browse by Language
-                </div>
+                </Link>
             </div>
         </div>
     )

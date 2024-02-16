@@ -1,9 +1,18 @@
 import React from 'react'
 import avaProfile from '../public/images/default-blue.png'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { logout } from '../redux/apiRequest'
 
 const ProfileMenu = (props) => {
     const { visible } = props
 
+    const nav = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        logout(dispatch, nav)
+    }
     if (!visible) {
         return null
     }
@@ -29,7 +38,9 @@ const ProfileMenu = (props) => {
                 </div>
                 <hr className='bg-gray-600 h-px my-4 border-0' />
 
-                <div className='text-white text-center text-sm hover:underline'>
+                <div className='text-white text-center text-sm hover:underline'
+                    onClick={() => handleLogout()}
+                >
                     Sign out of Netflix
                 </div>
             </div>

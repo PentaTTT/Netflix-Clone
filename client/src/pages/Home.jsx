@@ -3,6 +3,7 @@ import axios from 'axios'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import MovieList from '../components/MovieList'
+import { useSelector } from 'react-redux'
 
 const Home = ({ type }) => {
     // const movies = [
@@ -59,6 +60,7 @@ const Home = ({ type }) => {
     const [lists, setLists] = useState([]);
     const [movies, setMovies] = useState({})
     const [genre, setGenre] = useState(null);
+    const accessToken = useSelector(state => state.auth.login.currentUser.accessToken)
 
     useEffect(() => {
         const getRandomLists = async () => {
@@ -68,7 +70,7 @@ const Home = ({ type }) => {
                     {
                         headers: {
                             token:
-                                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YTAxOGIyOTE5YmU1MTY4OGMyZmJmMyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwNTc1MjcxMiwiZXhwIjoxNzA2MzU3NTEyfQ.Rqwgy2h_IVSaMNsqTi5dlt3VhUDHBQaPDC9H-uqfyd0"
+                                "Bearer " + accessToken
                         }
                     }
                 )
@@ -89,7 +91,7 @@ const Home = ({ type }) => {
                 const res = await axios.get(`http://localhost:8080/api/movie`,
                     {
                         headers: {
-                            token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YTAxOGIyOTE5YmU1MTY4OGMyZmJmMyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwNTc1MjcxMiwiZXhwIjoxNzA2MzU3NTEyfQ.Rqwgy2h_IVSaMNsqTi5dlt3VhUDHBQaPDC9H-uqfyd0'
+                            token: 'Bearer ' + accessToken
                         }
                     }
                 )

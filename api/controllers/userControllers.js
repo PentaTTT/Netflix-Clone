@@ -6,7 +6,7 @@ const userControllers = {
         const query = req.query.new;
         if (req.user.isAdmin) {
             try {
-                const users = query ? await User.find().sort({ id: -1 }).limit(10) : await User.find();
+                const users = query ? await User.find().sort({ id: -1 }).limit(5) : await User.find();
                 res.status(200).json(users)
             } catch (err) {
                 res.status(500).json(err)
@@ -57,7 +57,7 @@ const userControllers = {
         }
     },
 
-    // FIND USER
+    // FIND USER BY ID
     findUser: async (req, res) => {
         try {
             const user = await User.findById(req.params.id)

@@ -4,6 +4,8 @@ import logo from '../public/images/logo.png'
 // import hero from '../public/images/hero.jpg'
 import Input from '../components/Input'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { loginUser } from '../redux/apiRequest'
 
 const Login = ({ isRegister }) => {
     const [email, setEmail] = useState('')
@@ -11,6 +13,18 @@ const Login = ({ isRegister }) => {
     const [name, setName] = useState('')
 
     const nav = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleLogin = (e) => {
+        // e.preventDefault();
+        const user = {
+            email: email,
+            password: password
+        };
+        if (user) {
+            return loginUser(user, dispatch, nav)
+        }
+    }
 
     return (
         <div className={`
@@ -67,7 +81,7 @@ const Login = ({ isRegister }) => {
                              rounded-md w-full hover:bg-red-700
                              transition
                             '
-                            onClick={() => handleLogin()}
+                            onClick={!isRegister ? () => handleLogin() : () => handleRegister()}
                         >
                             {isRegister ? "Sign Up" : "Login"}
                         </button>
